@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: sans-serif; background-color: #2d2d2d; color: #f1f1f1; padding: 20px; }
+        .editor-container { max-width: 700px; margin: auto; background-color: #3d3d3d; padding: 25px; border-radius: 10px; }
+        h1, h2 { text-align: center; color: #00aaff;}
+        fieldset { border: 1px solid #555; border-radius: 8px; margin-bottom: 20px; padding: 15px; }
+        legend { padding: 0 10px; font-weight: bold; color: #00aaff; }
+        label { display: block; margin-top: 10px; margin-bottom: 5px; }
+        input[type="text"], input[type="url"], select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #666; background-color: #444; color: #fff; box-sizing: border-box; }
+        input[type="file"] { background-color: #555; padding: 8px; border-radius: 5px; width: 100%; box-sizing: border-box;}
+        button { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .save-button { background-color: #007bff; color: white; width: 100%; padding: 15px; font-size: 1.2em; margin-top: 10px; }
+        .view-link { display: block; text-align: center; margin-top: 20px; color: #00aaff; }
+        #addLinkButton { background-color: #28a745; color: white; }
+        .delete-btn { background-color: #dc3545; color: white; margin-left: 10px; }
+        .edit-list-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; background: #444; padding: 8px; border-radius: 5px; }
+        .edit-list-item span { flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .edit-list-item img { height: 20px; width: 20px; margin-right: 8px; border-radius: 3px; }
+        #themeCustomContainer, #addLinkLogoContainer { display: none; }
+        .status { text-align: center; font-weight: bold; color: #28a745; height: 20px; }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <h1>Profile Editor</h1>
+        <p class="status" id="saveStatus"></p>
+        
+        <fieldset>
+            <legend>Profile</legend>
+            <label for="editName">Profile Name:</label><input type="text" id="editName" placeholder="Enter your name">
+            <label for="editBio">Profile Bio:</label><textarea id="editBio" rows="3" placeholder="Write a short bio..."></textarea>
+            <label for="editPhotoUpload">Upload Profile Photo:</label><input type="file" id="editPhotoUpload" accept="image/*">
+        </fieldset>
+        
+        <fieldset>
+            <legend>Links</legend>
+            <div id="editLinksList"></div>
+            <div style="border-top: 1px solid #555; padding-top: 15px;">
+                <input type="text" id="newLinkText" placeholder="Link Text (e.g., Website)">
+                <input type="url" id="newLinkUrl" placeholder="URL (https://...)">
+                <label>Icon Type:</label>
+                <div>
+                    <input type="radio" id="iconTypeFa" name="iconType" value="fa" checked><label for="iconTypeFa" style="display: inline-block; margin-right: 15px;"> Font Awesome</label>
+                    <input type="radio" id="iconTypeLogo" name="iconType" value="logo"><label for="iconTypeLogo" style="display: inline-block;"> Upload Logo/GIF</label>
+                </div>
+                <div id="addLinkIconContainer"><input type="text" id="newLinkIcon" placeholder="Font Awesome Icon (e.g., fa-solid fa-globe)"></div>
+                <div id="addLinkLogoContainer"><input type="file" id="newLinkLogoUpload" accept="image/*,image/gif"></div>
+                <button id="addLinkButton" style="width: 100%;">Add Link</button>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Appearance & Effects</legend>
+            <div>
+                <input type="radio" id="themeTypeColor" name="themeType" value="color" checked><label for="themeTypeColor" style="display: inline-block; margin-right: 15px;"> Color Scheme</label>
+                <input type="radio" id="themeTypeImage" name="themeType" value="image"><label for="themeTypeImage" style="display: inline-block;"> Custom Image/GIF</label>
+            </div>
+            <div id="themeColorContainer"><label for="themeSelector">Theme:</label>
+                <select id="themeSelector">
+                    <option value="theme-synthwave">Synthwave Sunset</option><option value="theme-oceanic">Oceanic Glow</option>
+                    <option value="theme-golden-hour">Golden Hour</option><option value="theme-lush-meadow">Lush Meadow</option><option value="theme-crisp-white">Crisp & Clean</option>
+                </select>
+            </div>
+            <div id="themeCustomContainer"><label for="themeImageUpload">Upload Background:</label><input type="file" id="themeImageUpload" accept="image/*,image/gif"></div>
+            <label for="fontSelector">Font:</label>
+            <select id="fontSelector">
+                <option value="font-roboto">Roboto</option><option value="font-lato">Lato</option><option value="font-montserrat">Montserrat</option>
+                <option value="font-poppins">Poppins</option><option value="font-oswald">Oswald</option><option value="font-nunito">Nunito</option>
+                <option value="font-playfair-display">Playfair Display</option><option value="font-source-code-pro">Source Code Pro</option>
+                <option value="font-bebas-neue">Bebas Neue</option><option value="font-lobster">Lobster</option><option value="font-pacifico">Pacifico</option><option value="font-caveat">Caveat</option>
+            </select>
+             <label for="fontColorSelector">Font Color:</label>
+            <select id="fontColorSelector">
+                <option value="default">Default to Theme</option><option value="font-color-hotpink">Hot Pink</option><option value="font-color-cyan">Cyan</option>
+                <option value="font-color-gold">Gold</option><option value="font-color-lime">Lime Green</option><option value="font-color-orange">Orange</option>
+            </select>
+            <label for="linkShapeSelector">Link Shape:</label>
+            <select id="linkShapeSelector">
+                <option value="link-shape-soft">Soft Rounded</option><option value="link-shape-pill">Pill</option><option value="link-shape-sharp">Sharp Rectangle</option>
+                <option value="link-shape-angled">Angled</option><option value="link-shape-round-l">Round Left</option><option value="link-shape-round-r">Round Right</option>
+            </select>
+            <label for="fontGlowEffect">Glowing Font Effect:</label>
+            <select id="fontGlowEffect">
+                <option value="none">None</option><option value="font-glow-rgb">Animated RGB</option><option value="font-glow-pulse">Pulsing White</option>
+                <option value="font-glow-fire">Static Fire</option><option value="font-glow-ice">Static Ice</option><option value="font-glow-electric-blue">Electric Blue</option>
+                <option value="font-glow-pink">Hot Pink</option><option value="font-glow-gold">Gold</option>
+            </select>
+            <label for="borderEffect">Neon Border Effect:</label>
+            <select id="borderEffect">
+                <option value="none">None</option>
+                <optgroup label="Animated"><option value="border-effect-rgb-slow">RGB Cycle (Slow)</option><option value="border-effect-rgb-fast">RGB Cycle (Fast)</option><option value="border-effect-two-tone">Cyan & Magenta Fade</option><option value="border-effect-pulse-white">Pulsing White</option><option value="border-effect-pulse-blue">Pulsing Blue</option><option value="border-effect-flicker-pink">Flickering Pink</option></optgroup>
+                <optgroup label="Static Neon"><option value="border-effect-static-fire">Fire (Orange/Red)</option><option value="border-effect-static-ice">Ice (Light Blue)</option><option value="border-effect-static-green">Matrix Green</option><option value="border-effect-static-gold">Gold</option><option value="border-effect-static-purple">Purple</option></optgroup>
+            </select>
+             <label for="iconStyleSelector">Neon Icon Style:</label>
+            <select id="iconStyleSelector">
+                <option value="none">Default</option><option value="icon-style-neon-pink">Neon Pink</option><option value="icon-style-neon-blue">Neon Blue</option><option value="icon-style-neon-green">Neon Green</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Music Playlist</legend>
+            <div id="editPlaylist"></div>
+            <label for="musicUpload">Add Song(s) to Playlist:</label>
+            <input type="file" id="musicUpload" accept="audio/*" multiple>
+            <button id="clearPlaylistButton" class="delete-btn" style="width: 100%; margin:10px 0 0 0;">Clear Entire Playlist</button>
+        </fieldset>
+
+        <button id="saveButton" class="save-button">Save All Changes</button>
+        <a href="./index.html" target="_blank" class="view-link">View My Profile Page (opens in new tab)</a>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const MY_PASSWORD = "EllieSenpai22@";
+        
+        const el = {
+            editName: document.getElementById('editName'), editBio: document.getElementById('editBio'), 
+            editPhotoUpload: document.getElementById('editPhotoUpload'), editLinksList: document.getElementById('editLinksList'), 
+            addLinkButton: document.getElementById('addLinkButton'), newLinkText: document.getElementById('newLinkText'), 
+            newLinkUrl: document.getElementById('newLinkUrl'), newLinkIcon: document.getElementById('newLinkIcon'), 
+            themeSelector: document.getElementById('themeSelector'), fontSelector: document.getElementById('fontSelector'), 
+            fontGlowEffect: document.getElementById('fontGlowEffect'), borderEffect: document.getElementById('borderEffect'), 
+            themeTypeRadios: document.querySelectorAll('input[name="themeType"]'), linkShapeSelector: document.getElementById('linkShapeSelector'), 
+            iconStyleSelector: document.getElementById('iconStyleSelector'), fontColorSelector: document.getElementById('fontColorSelector'),
+            themeColorContainer: document.getElementById('themeColorContainer'), themeCustomContainer: document.getElementById('themeCustomContainer'),
+            themeImageUpload: document.getElementById('themeImageUpload'), iconTypeRadios: document.querySelectorAll('input[name="iconType"]'),
+            addLinkIconContainer: document.getElementById('addLinkIconContainer'), addLinkLogoContainer: document.getElementById('addLinkLogoContainer'),
+            newLinkLogoUpload: document.getElementById('newLinkLogoUpload'), musicUpload: document.getElementById('musicUpload'), 
+            editPlaylist: document.getElementById('editPlaylist'), clearPlaylistButton: document.getElementById('clearPlaylistButton'), 
+            saveButton: document.getElementById('saveButton'), saveStatus: document.getElementById('saveStatus')
+        };
+        let profileData = {};
+        let temp = { photo: null, theme: null, logo: null };
+        const defaultData = {
+            name: "Your Name", bio: "Your bio goes here...", photoDataUrl: "https://via.placeholder.com/150",
+            links: [{ text: "My Website", url: "#", icon: { type: "fa", value: "fa-solid fa-globe" } }],
+            theme: "theme-synthwave", font: "font-roboto", themeType: "color", themeImageDataUrl: null,
+            fontGlow: "none", borderEffect: "none", linkShape: "link-shape-soft", iconStyle: "none", fontColor: "default",
+            playlist: [], currentTrackIndex: 0
+        };
+
+        let isAuthenticated = false;
+
+        function authenticate() {
+            // Secret handshake to reveal edit button on the main page.
+            // This editor page requires password on load.
+            const enteredPassword = prompt("Please enter your password to edit:");
+            if (enteredPassword === MY_PASSWORD) {
+                isAuthenticated = true;
+                loadAndRender();
+            } else if (enteredPassword !== null) {
+                alert("Incorrect password. Editor locked.");
+                document.body.innerHTML = "<h1 style='color: white; text-align: center;'>Access Denied</h1>";
+            }
+        }
+        
+        function loadAndRender() {
+            loadData();
+            renderEditor();
+            toggleIconControls();
+            toggleThemeControls();
+        }
+
+        function loadData() { const d = localStorage.getItem('myProfileData'); profileData = d ? { ...defaultData, ...JSON.parse(d) } : { ...defaultData }; }
+        function saveData() {
+            try { localStorage.setItem('myProfileData', JSON.stringify(profileData));
+                el.saveStatus.textContent = "Saved Successfully! Refresh your profile page to see changes.";
+                setTimeout(() => el.saveStatus.textContent = "", 3000);
+            } catch (e) { alert("Error saving data. An uploaded file might be too large."); }
+        }
+        function renderEditor() {
+            el.editName.value = profileData.name; el.editBio.value = profileData.bio;
+            el.themeSelector.value = profileData.theme; el.fontSelector.value = profileData.font;
+            el.fontGlowEffect.value = profileData.fontGlow; el.borderEffect.value = profileData.borderEffect;
+            el.linkShapeSelector.value = profileData.linkShape; el.iconStyleSelector.value = profileData.iconStyle;
+            el.fontColorSelector.value = profileData.fontColor;
+            const themeRadio = document.querySelector(`input[name="themeType"][value="${profileData.themeType}"]`); if (themeRadio) themeRadio.checked = true;
+            toggleThemeControls();
+            
+            el.editLinksList.innerHTML = '';
+            (profileData.links || []).forEach((link, index) => {
+                const item = document.createElement('div'); item.className = 'edit-list-item';
+                const iconHtml = (link.icon?.type === 'logo') ? `<img src="${link.icon.value}" alt="logo">` : `<i class="${(link.icon?.value) || ''}"></i>`;
+                item.innerHTML = `<span>${iconHtml} ${link.text}</span><button class="delete-btn" data-type="link" data-index="${index}">Delete</button>`;
+                el.editLinksList.appendChild(item);
+            });
+            renderPlaylistEditor();
+        }
+        function renderPlaylistEditor() {
+            el.editPlaylist.innerHTML = '';
+            (profileData.playlist || []).forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = 'edit-list-item';
+                item.innerHTML = `<span><i class="fas fa-music"></i> ${song.name}</span><button class="delete-btn" data-type="song" data-index="${index}">Delete</button>`;
+                el.editPlaylist.appendChild(item);
+            });
+        }
+        function toggleThemeControls() { const checkedRadio = document.querySelector('input[name="themeType"]:checked'); if (!checkedRadio) return; el.themeColorContainer.style.display = checkedRadio.value === 'image' ? 'none' : 'block'; el.themeCustomContainer.style.display = checkedRadio.value === 'image' ? 'block' : 'none'; }
+        function toggleIconControls() { const checkedRadio = document.querySelector('input[name="iconType"]:checked'); if (!checkedRadio) return; el.addLinkIconContainer.style.display = checkedRadio.value === 'fa' ? 'block' : 'none'; el.addLinkLogoContainer.style.display = checkedRadio.value === 'fa' ? 'none' : 'block'; }
+        
+        el.editPhotoUpload.addEventListener('change', (e) => { const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>temp.photo=ev.target.result; r.readAsDataURL(f); });
+        el.themeImageUpload.addEventListener('change', (e) => { const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>temp.theme=ev.target.result; r.readAsDataURL(f); });
+        el.newLinkLogoUpload.addEventListener('change', (e) => { const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>temp.logo=ev.target.result; r.readAsDataURL(f); });
+        el.themeTypeRadios.forEach(r => r.addEventListener('change', toggleThemeControls));
+        el.iconTypeRadios.forEach(r => r.addEventListener('change', toggleIconControls));
+        
+        el.musicUpload.addEventListener('change', (event) => {
+            const files = event.target.files; if (!files.length) return;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (!profileData.playlist) profileData.playlist = [];
+                    profileData.playlist.push({ name: file.name, dataUrl: e.target.result });
+                    renderPlaylistEditor();
+                };
+                reader.readAsDataURL(file);
+            });
+            event.target.value = '';
+        });
+
+        el.editPlaylist.addEventListener('click', (e) => { if (e.target.dataset.type === 'song') { profileData.playlist.splice(e.target.dataset.index, 1); renderPlaylistEditor(); } });
+        el.clearPlaylistButton.addEventListener('click', () => { profileData.playlist = []; renderPlaylistEditor(); });
+        el.editLinksList.addEventListener('click', (e) => { if (e.target.dataset.type === 'link') { profileData.links.splice(e.target.dataset.index, 1); renderEditor(); } });
+        
+        el.addLinkButton.addEventListener('click', () => {
+            if (!el.newLinkText.value || !el.newLinkUrl.value) return alert('Please fill in Link Text and URL.');
+            const iconType = document.querySelector('input[name="iconType"]:checked').value;
+            let iconData = {};
+            if (iconType === 'fa') { iconData = { type: 'fa', value: el.newLinkIcon.value }; }
+            else { if (!temp.logo) return alert('Please upload a logo file.'); iconData = { type: 'logo', value: temp.logo }; }
+            if (!profileData.links) profileData.links = [];
+            profileData.links.push({ text: el.newLinkText.value, url: el.newLinkUrl.value, icon: iconData });
+            el.newLinkText.value = ''; el.newLinkUrl.value = ''; el.newLinkIcon.value = ''; el.newLinkLogoUpload.value = ''; temp.logo = null;
+            renderEditor();
+        });
+
+        el.saveButton.addEventListener('click', () => {
+            profileData.name = el.editName.value; profileData.bio = el.editBio.value;
+            profileData.theme = el.themeSelector.value; profileData.font = el.fontSelector.value;
+            profileData.fontGlow = el.fontGlowEffect.value; profileData.borderEffect = el.borderEffect.value;
+            profileData.linkShape = el.linkShapeSelector.value; profileData.iconStyle = el.iconStyleSelector.value;
+            profileData.fontColor = el.fontColorSelector.value;
+            profileData.themeType = document.querySelector('input[name="themeType"]:checked').value;
+            if (temp.photo) profileData.photoDataUrl = temp.photo;
+            if (temp.theme) profileData.themeImageDataUrl = temp.theme;
+            if (profileData.themeType === 'color') profileData.themeImageDataUrl = null;
+            if (profileData.currentTrackIndex >= profileData.playlist.length) profileData.currentTrackIndex = 0;
+            saveData();
+        });
+        
+        authenticate();
+    });
+    </script>
+</body>
+</html>
