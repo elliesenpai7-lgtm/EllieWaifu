@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Oswald:wght@400;700&family=Source+Code+Pro:wght@400;700&family=Playfair+Display:wght@400;700&family=Nunito:wght@400;700&family=Poppins:wght@400;700&family=Lobster&family=Pacifico&family=Caveat&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #121212; --text-color: #ffffff; 
+            --link-bg: rgba(10, 10, 10, 0.6); 
+            --link-hover-bg: rgba(25, 25, 25, 0.75); 
+            --font-family: 'Roboto', sans-serif;
+        }
+        /* --- VIBRANT THEMES --- */
+        body.theme-synthwave { --bg-color: linear-gradient(160deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --text-color: #fff; }
+        body.theme-oceanic { --bg-color: linear-gradient(to top, #00c6ff, #0072ff); --text-color: #fff; }
+        body.theme-golden-hour { --bg-color: linear-gradient(135deg, #ffc371 0%, #ff5f6d 100%); --text-color: #fff; }
+        body.theme-lush-meadow { --bg-color: linear-gradient(to right, #83a4d4, #b6fbff); --text-color: #2c3e50; }
+        body.theme-crisp-white { --bg-color: #ffffff; --text-color: #111; --link-bg: rgba(230, 230, 230, 0.7); --link-hover-bg: rgba(210, 210, 210, 0.9); }
+        
+        /* FONT DEFINITIONS */
+        body.font-roboto { --font-family: 'Roboto', sans-serif; } body.font-lato { --font-family: 'Lato', sans-serif; } body.font-montserrat { --font-family: 'Montserrat', sans-serif; }
+        body.font-oswald { --font-family: 'Oswald', sans-serif; } body.font-source-code-pro { --font-family: 'Source Code Pro', monospace; } body.font-playfair-display { --font-family: 'Playfair Display', serif; }
+        body.font-nunito { --font-family: 'Nunito', sans-serif; } body.font-poppins { --font-family: 'Poppins', sans-serif; } body.font-lobster { --font-family: 'Lobster', cursive; }
+        body.font-pacifico { --font-family: 'Pacifico', cursive; } body.font-caveat { --font-family: 'Caveat', cursive; } body.font-bebas-neue { --font-family: 'Bebas Neue', cursive; }
+        
+        body { margin: 0; font-family: var(--font-family); background-color: var(--bg-color); background-image: var(--bg-image, none); background-size: cover; background-position: center center; background-attachment: fixed; color: var(--text-color); transition: background 0.3s ease, color 0.3s ease; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding-top: 20px; box-sizing: border-box; }
+        .container { width: 90%; max-width: 680px; text-align: center; position: relative; z-index: 1; padding-bottom: 80px; }
+        header { margin-bottom: 20px; }
+        #profilePhoto { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid transparent; background-color: var(--link-bg); padding: 3px; }
+        #profileName { margin-top: 15px; margin-bottom: 10px; font-size: 2em; font-weight: 700; }
+        #profileBio { font-size: 1em; margin-top: 0; margin-bottom: 20px; white-space: pre-wrap; opacity: 0.9; }
+        
+        body.custom-bg-active #profileName,
+        body.custom-bg-active #profileBio {
+            text-shadow: 0px 0px 5px rgba(0,0,0,0.7), 0px 0px 10px rgba(0,0,0,0.7);
+        }
+
+        #linksContainer a { display: flex; align-items: center; justify-content: center; gap: 15px; background: var(--link-bg); backdrop-filter: blur(5px); color: var(--text-color); padding: 15px 20px; margin: 15px 0; border-radius: 8px; text-decoration: none; font-size: 1.1em; font-weight: 500; transition: transform 0.2s ease, background-color 0.2s ease; border: 3px solid transparent; }
+        #linksContainer a:hover { transform: scale(1.03); background: var(--link-hover-bg); }
+        #linksContainer a .link-icon { font-size: 1.4em; width: 25px; transition: transform 0.3s ease; }
+        #linksContainer a .link-logo { height: 25px; width: 25px; object-fit: contain; border-radius: 4px; transition: transform 0.3s ease; }
+
+        /* FONT COLORS */
+        body.font-color-hotpink { --text-color: #ff1493; } body.font-color-cyan { --text-color: #00ffff; } body.font-color-gold { --text-color: #ffd700; }
+        body.font-color-lime { --text-color: #00ff00; } body.font-color-orange { --text-color: #ff8c00; }
+
+        /* LINK SHAPES */
+        body.link-shape-pill #linksContainer a { border-radius: 50px; } body.link-shape-soft #linksContainer a { border-radius: 12px; }
+        body.link-shape-sharp #linksContainer a { border-radius: 0; } body.link-shape-angled #linksContainer a { clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%); }
+        body.link-shape-round-l #linksContainer a { border-radius: 50px 8px 8px 50px; } body.link-shape-round-r #linksContainer a { border-radius: 8px 50px 50px 8px; }
+
+        /* BORDER EFFECTS (NO SHADOWS) */
+        @keyframes rgb-border-cycle { 0%, 100% { border-color: hsl(0, 100%, 50%); } 16% { border-color: hsl(60, 100%, 50%); } 33% { border-color: hsl(120, 100%, 50%); } 50% { border-color: hsl(180, 100%, 50%); } 66% { border-color: hsl(240, 100%, 50%); } 83% { border-color: hsl(300, 100%, 50%); } }
+        @keyframes pulse-border { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+        @keyframes flicker-border { 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { border-color: #ff00de; opacity: 1; } 20%, 24%, 55% { opacity: 0.6; } }
+        @keyframes two-tone-border-fade { 0%, 100% { border-color: #00ffff; } 50% { border-color: #ff00ff; } }
+        
+        body.border-effect-rgb-slow #profilePhoto, body.border-effect-rgb-slow #linksContainer a, body.border-effect-rgb-slow .player-control { animation: rgb-border-cycle 8s linear infinite; }
+        body.border-effect-rgb-fast #profilePhoto, body.border-effect-rgb-fast #linksContainer a, body.border-effect-rgb-fast .player-control { animation: rgb-border-cycle 2s linear infinite; }
+        body.border-effect-pulse-white #profilePhoto, body.border-effect-pulse-white #linksContainer a, body.border-effect-pulse-white .player-control { border-color: #fff; animation: pulse-border 2s infinite ease-in-out; }
+        body.border-effect-pulse-blue #profilePhoto, body.border-effect-pulse-blue #linksContainer a, body.border-effect-pulse-blue .player-control { border-color: #00aaff; animation: pulse-border 2s infinite ease-in-out; }
+        body.border-effect-flicker-pink #profilePhoto, body.border-effect-flicker-pink #linksContainer a, body.border-effect-flicker-pink .player-control { animation: flicker-border 3s infinite; }
+        body.border-effect-two-tone #profilePhoto, body.border-effect-two-tone #linksContainer a, body.border-effect-two-tone .player-control { animation: two-tone-border-fade 4s linear infinite; }
+        body.border-effect-static-fire #profilePhoto, body.border-effect-static-fire #linksContainer a, body.border-effect-static-fire .player-control { border-color: #ff8a00; }
+        body.border-effect-static-ice #profilePhoto, body.border-effect-static-ice #linksContainer a, body.border-effect-static-ice .player-control { border-color: #00f2ff; }
+        body.border-effect-static-green #profilePhoto, body.border-effect-static-green #linksContainer a, body.border-effect-static-green .player-control { border-color: #0f0; }
+        body.border-effect-static-gold #profilePhoto, body.border-effect-static-gold #linksContainer a, body.border-effect-static-gold .player-control { border-color: #ffd700; }
+        body.border-effect-static-purple #profilePhoto, body.border-effect-static-purple #linksContainer a, body.border-effect-static-purple .player-control { border-color: #9400d3; }
+
+        /* FONT GLOW EFFECTS */
+        @keyframes font-glow-rgb { 0%, 100% { text-shadow: 0 0 10px hsl(0, 100%, 60%); } 16% { text-shadow: 0 0 10px hsl(60, 100%, 60%); } 33% { text-shadow: 0 0 10px hsl(120, 100%, 60%); } 50% { text-shadow: 0 0 10px hsl(180, 100%, 60%); } 66% { text-shadow: 0 0 10px hsl(240, 100%, 60%); } 83% { text-shadow: 0 0 10px hsl(300, 100%, 60%); } }
+        body.font-glow-rgb #profileName, body.font-glow-rgb #profileBio, body.font-glow-rgb #linksContainer a { text-shadow: 0 0 10px hsla(0, 0%, 100%, 0.5); animation: font-glow-rgb 4s linear infinite; }
+        body.font-glow-fire #profileName, body.font-glow-fire #profileBio, body.font-glow-fire #linksContainer a { text-shadow: 0 0 5px #fff, 0 0 10px #ff8a00, 0 0 15px #e52e71; }
+        body.font-glow-ice #profileName, body.font-glow-ice #profileBio, body.font-glow-ice #linksContainer a { text-shadow: 0 0 5px #fff, 0 0 10px #00f2ff, 0 0 15px #00aaff; }
+        body.font-glow-pulse #profileName, body.font-glow-pulse #profileBio, body.font-glow-pulse #linksContainer a { animation: pulse-border 2s infinite ease-in-out; text-shadow: 0 0 10px var(--text-color); }
+        body.font-glow-pink #profileName, body.font-glow-pink #profileBio, body.font-glow-pink #linksContainer a { text-shadow: 0 0 10px #ff00de; }
+        body.font-glow-gold #profileName, body.font-glow-gold #profileBio, body.font-glow-gold #linksContainer a { text-shadow: 0 0 10px #ffd700; }
+        body.font-glow-electric-blue #profileName, body.font-glow-electric-blue #profileBio, body.font-glow-electric-blue #linksContainer a { text-shadow: 0 0 10px #08f; }
+
+        /* NEON ICON STYLES */
+        body.icon-style-neon-pink .link-icon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 8px #ff00de, 0 0 12px #ff00de; }
+        body.icon-style-neon-blue .link-icon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 8px #00aaff, 0 0 12px #00aaff; }
+        body.icon-style-neon-green .link-icon { color: #fff; text-shadow: 0 0 4px #fff, 0 0 8px #0f0, 0 0 12px #0f0; }
+        
+        #musicPlayer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; padding: 10px; gap: 15px; z-index: 998; }
+        .player-control { background-color: rgba(108, 117, 125, 0.5); border-radius: 50%; width: 40px; height: 40px; font-size: 16px; color: white; border: 3px solid transparent; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body>
+    <audio id="backgroundMusic" loop muted></audio>
+    <div class="container">
+        <header>
+            <img id="profilePhoto" src="https://via.placeholder.com/150" alt="Profile Photo">
+            <h1 id="profileName">Your Name</h1>
+            <p id="profileBio">Your bio goes here...</p>
+        </header>
+        <main id="linksContainer"></main>
+    </div>
+    <div id="musicPlayer">
+        <button id="prevButton" class="player-control" title="Previous Song"><i class="fas fa-backward-step"></i></button>
+        <button id="muteButton" class="player-control" title="Mute/Unmute Music"><i class="fas fa-volume-xmark"></i></button>
+        <button id="nextButton" class="player-control" title="Next Song"><i class="fas fa-forward-step"></i></button>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const el = {
+            body: document.body, profilePhoto: document.getElementById('profilePhoto'), profileName: document.getElementById('profileName'),
+            profileBio: document.getElementById('profileBio'), linksContainer: document.getElementById('linksContainer'), 
+            backgroundMusic: document.getElementById('backgroundMusic'), musicPlayer: document.getElementById('musicPlayer'),
+            muteButton: document.getElementById('muteButton'), prevButton: document.getElementById('prevButton'),
+            nextButton: document.getElementById('nextButton')
+        };
+        let profileData = {};
+        let currentTrackIndex = 0;
+
+        const defaultData = {
+            name: "Your Name", bio: "Your bio goes here...", photoDataUrl: "https://via.placeholder.com/150",
+            links: [{ text: "My Website", url: "#", icon: { type: "fa", value: "fa-solid fa-globe" } }],
+            theme: "theme-synthwave", font: "font-roboto", themeType: "color", themeImageDataUrl: null,
+            fontGlow: "none", borderEffect: "none", linkShape: "link-shape-soft", iconStyle: "none", fontColor: "default",
+            playlist: [], currentTrackIndex: 0
+        };
+
+        function loadData() {
+            const d = localStorage.getItem('myProfileData');
+            profileData = d ? { ...defaultData, ...JSON.parse(d) } : { ...defaultData };
+            currentTrackIndex = profileData.currentTrackIndex || 0;
+        }
+        
+        function renderProfile() {
+            el.body.className = '';
+            el.body.classList.add(profileData.font, profileData.theme, profileData.fontGlow, profileData.borderEffect, profileData.linkShape, profileData.iconStyle, profileData.fontColor);
+            el.body.classList.toggle('custom-bg-active', profileData.themeType === 'image' && profileData.themeImageDataUrl);
+            el.body.style.backgroundImage = (profileData.themeType === 'image' && profileData.themeImageDataUrl) ? `url(${profileData.themeImageDataUrl})` : 'none';
+            el.profileName.textContent = profileData.name;
+            el.profileBio.textContent = profileData.bio;
+            el.profilePhoto.src = profileData.photoDataUrl; 
+            el.linksContainer.innerHTML = '';
+            (profileData.links || []).forEach(link => {
+                const linkEl = document.createElement('a'); linkEl.href = link.url; linkEl.target = "_blank";
+                const iconHtml = (link.icon?.type === 'logo') ? `<img src="${link.icon.value}" class="link-logo" alt="logo">` : `<i class="${link.icon?.value || 'fa-solid fa-link'} link-icon"></i>`;
+                linkEl.innerHTML = `${iconHtml}<span>${link.text}</span>`;
+                el.linksContainer.appendChild(linkEl);
+            });
+            setupMusicPlayer();
+        }
+        
+        function setupMusicPlayer() {
+            if (profileData.playlist && profileData.playlist.length > 0) {
+                el.musicPlayer.style.display = 'flex';
+                playTrack(currentTrackIndex);
+            } else {
+                el.musicPlayer.style.display = 'none';
+                el.backgroundMusic.src = '';
+            }
+        }
+        
+        function playTrack(index) {
+            if (!profileData.playlist || profileData.playlist.length === 0) return;
+            currentTrackIndex = index;
+            const track = profileData.playlist[index];
+            el.backgroundMusic.src = track.dataUrl;
+            el.backgroundMusic.play().catch(() => {});
+        }
+
+        function changeTrack(direction) {
+            if (!profileData.playlist || profileData.playlist.length < 2) return;
+            let newIndex = currentTrackIndex + direction;
+            if (newIndex < 0) newIndex = profileData.playlist.length - 1;
+            if (newIndex >= profileData.playlist.length) newIndex = 0;
+            playTrack(newIndex);
+        }
+
+        el.muteButton.addEventListener('click', () => { el.backgroundMusic.muted = !el.backgroundMusic.muted; el.muteButton.innerHTML = `<i class="fas ${el.backgroundMusic.muted ? 'fa-volume-xmark' : 'fa-volume-high'}"></i>`; });
+        el.nextButton.addEventListener('click', () => changeTrack(1));
+        el.prevButton.addEventListener('click', () => changeTrack(-1));
+        el.backgroundMusic.onended = () => changeTrack(1);
+
+        loadData();
+        renderProfile();
+    });
+    </script>
+</body>
+</html>
